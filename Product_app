@@ -1,0 +1,64 @@
+class ProductApp:
+    def __init__(self):
+        self.products = []
+
+    def add_product(self, product_id, name, category, price):
+        product = {
+            "Product ID": product_id,
+            "Name": name,
+            "Category": category,
+            "Price": price
+        }
+        self.products.append(product)
+        print(f"Product {name} added successfully!")
+
+    def update_product(self, product_id, new_name=None, new_category=None, new_price=None):
+        for product in self.products:
+            if product["Product ID"] == product_id:
+                if new_name:
+                    product["Name"] = new_name
+                if new_category:
+                    product["Category"] = new_category
+                if new_price:
+                    product["Price"] = new_price
+                print(f"Product {product_id} updated successfully!")
+                return
+        print(f"Product with ID {product_id} not found!")
+
+    def delete_product(self, product_id):
+        for product in self.products:
+            if product["Product ID"] == product_id:
+                self.products.remove(product)
+                print(f"Product {product_id} deleted successfully!")
+                return
+        print(f"Product with ID {product_id} not found!")
+
+    def get_product_by_id(self, product_id):
+        for product in self.products:
+            if product["Product ID"] == product_id:
+                return product
+        return f"Product with ID {product_id} not found!"
+
+    def get_all_products(self):
+        return self.products if self.products else "No products available."
+
+    def get_products_by_category(self, category):
+        filtered_products = [p for p in self.products if p["Category"] == category]
+        return filtered_products if filtered_products else f"No products found in the category: {category}"
+
+    def get_products_between_prices(self, min_price, max_price):
+        filtered_products = [p for p in self.products if min_price <= p["Price"] <= max_price]
+        return filtered_products if filtered_products else f"No products found between prices: {min_price} and {max_price}"
+
+
+app = ProductApp()
+app.add_product(223, "Laptop", "Electronics", 1500)
+app.add_product(224, "Headphones", "Electronics", 100)
+app.add_product(225, "Shoes", "Fashion", 80)
+
+app.update_product(223, new_name="Gaming Laptop")
+app.delete_product(225)
+print(app.get_product_by_id(224))
+print(app.get_all_products())
+print(app.get_products_by_category("Electronics"))
+print(app.get_products_between_prices(50, 500))
